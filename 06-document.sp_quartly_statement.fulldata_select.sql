@@ -138,7 +138,7 @@ IF OBJECT_ID('tempdb..##FULL_DATA') IS NOT NULL  --vue details
 	ON C.contract_id = A.contract_id AND P.product_code = A.product_code
 	WHERE CASE 
 			WHEN @mode='ECO' AND P.product_code LIKE 'ECO%' THEN 1 
-			WHEN @mode='FR' AND C.activity_country_iso3 = 'FRA' AND P.product_code IN ('CC','XL','EU') THEN 1
+			WHEN @mode='FR' AND C.activity_country_iso3 = 'FRA' AND P.product_code IN ('CC','PD2','EU') THEN 1
 			WHEN @mode='INTIL' AND C.activity_country_iso3 <> 'FRA' THEN 1
 			ELSE 0
 		END = 1
@@ -152,7 +152,7 @@ SET @t2 = GETDATE();
 PRINT('#FULL_DATA: ' +  CAST(DATEDIFF(millisecond,@t1,@t2) AS VARCHAR(25)) + ' elapsed_ms')
 
 
---------------- Table agrégée par associate -------------
+--------------- Table agrï¿½gï¿½e par associate -------------
 SET @t1 = GETDATE()
 BEGIN
 IF OBJECT_ID('tempdb..##ASSOCIATES_AGG') IS NOT NULL --vue par associate
@@ -218,7 +218,7 @@ IF OBJECT_ID('tempdb..##ASSOCIATES_AGG') IS NOT NULL --vue par associate
 			   WHEN has_ecc = 1 AND has_ecd = 1 AND ir = 0
 					THEN 'T9'
 				END		)	
-		 +'_' + CAST(c.associateId AS VARCHAR)																AS filename_eco --créer 2 champs pour ne pas embrouiller la revue
+		 +'_' + CAST(c.associateId AS VARCHAR)																AS filename_eco --crï¿½er 2 champs pour ne pas embrouiller la revue
 	INTO ##ASSOCIATES_AGG
 	FROM ##CONTRATS c
 	JOIN -------------Get text data ------------
@@ -275,7 +275,7 @@ ON ##ASSOCIATES_AGG (associateId)
 SET @t2 = GETDATE();
 PRINT('##ASSOCIATES_AGG: ' +  CAST(DATEDIFF(millisecond,@t1,@t2) AS VARCHAR(25)) + ' elapsed_ms')	
 	
------------Table agrégée par associate, par produit ----------------
+-----------Table agrï¿½gï¿½e par associate, par produit ----------------
 SET @t1 = GETDATE();
 BEGIN
 IF OBJECT_ID('tempdb..##PRODUCT_AGG') IS NOT NULL --vue par associate, par produit
