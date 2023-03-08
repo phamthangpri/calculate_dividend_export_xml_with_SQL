@@ -6,7 +6,7 @@
 					@enddate
 					@contract_codes : NULL = all contracts, 
 									  OR 'Sample_auto' = create automatically a sample with all case types,
-									  OR list of contracts with ; delimeter : '042124;045640;062522'
+									  OR list of contracts with ; delimeter : '438273;182722;921812'
 					@timezonename : French time zone
  **************************************************************************************************************
  SUMMARY OF CHANGES
