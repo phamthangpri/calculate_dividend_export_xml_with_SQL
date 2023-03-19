@@ -52,9 +52,9 @@ BEGIN
 			,d.payment_date
 			,enjoyment_share
 			,net_dividend_after_reinvestment
-			,CASE WHEN d.product_code IN ('CC','XL','EU') THEN 0 ELSE is_subject_to_income_tax	END							AS ir
-			,CASE WHEN d.product_code IN ('CC','XL','EU') THEN 0 ELSE is_tax_residence_in_france END	 					AS rf
-			,CASE WHEN d.product_code IN ('CC','XL','EU') THEN 0 ELSE is_exempted_of_withholding_tax END 					AS has_pf
+			,CASE WHEN d.product_code IN ('PD1','PD2','PD3') THEN 0 ELSE is_subject_to_income_tax	END							AS ir
+			,CASE WHEN d.product_code IN ('PD1','PD2','PD3') THEN 0 ELSE is_tax_residence_in_france END	 						AS rf
+			,CASE WHEN d.product_code IN ('PD1','PD2','PD3') THEN 0 ELSE is_exempted_of_withholding_tax END 					AS has_pf
 			,d.dividend_date								
 	INTO ##DIVIDENDES_TRANSFORMED																									
 	FROM [dbo].[vw_dividend] d
@@ -84,8 +84,8 @@ BEGIN
 			,SUM(net_dividend_after_reinvestment)																				AS net_distributed_dividend
 			,SUM(d.net_dividend - net_dividend_after_reinvestment)																AS reinvested_amount
 			,SUM(d.net_dividend - net_dividend_after_reinvestment)/SUM(net_dividend)											AS reinvestment_percentage
- 			,CASE d.product_code WHEN 'ECO18C' THEN 'ECO_18C' 
-									WHEN 'ECO18D' THEN 'ECO_18D' 
+ 			,CASE d.product_code WHEN 'PD4' THEN 'PD_4' 
+									WHEN 'PD5' THEN 'PD_5' 
 									ELSE d.product_code
 									END																							AS product_clean
 			,SUM(CAST(d.gross_dividend AS NUMERIC(15,2))- CAST(d.net_dividend AS NUMERIC(15,2)))								AS witheld_taxes
@@ -111,7 +111,7 @@ BEGIN
 	SELECT *
 	INTO ##DIV_NORMAL
 	FROM ##DIVIDENDES
-	WHERE type_code = 181500000
+	WHERE type_code = 12345
 END
 -----------------------------Table DIV_SUM ------------------------------------------------
 --- cette table pour calculer le total de div sur le trimestre en cours. Juste pour am�liorer la performance pour la table #DIV_ALL
@@ -208,7 +208,7 @@ IF OBJECT_ID('tempdb..##DIV_ALL') IS NOT NULL
 					,shares_active													AS shares
 					,type_code
 			FROM ##DIVIDENDES
-			WHERE type_code <> 181500000)	ext
+			WHERE type_code <> 12345)	ext
 			ON d.contract_id = ext.contract_id AND d.product_code = ext.product_code
 			AND d.dividend_date = ext.dividend_date
 			
