@@ -2,22 +2,14 @@
 
 ## Overview
 
-This project aims to calculate dividends received by clients for the last quarter. It exports all related data and stores the output in XML files to generate PDF files and send them to clients.
+This project aims to calculate dividends received by clients for a given quarter. It exports all related data and stores the output in XML files to generate PDF files and send them to clients.
 
 ## Features
 
-- Calculate dividends for the last quarter.
+- Calculate dividends for a given quarter.
 - Export data to XML files.
-- Generate PDFs from XML files.
-- Send generated PDFs to clients.
-
-## Table of Contents
-
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Author](#author)
-- [License](#license)
+- Generate PDFs from XML files. (not in this script)
+- Send generated PDFs to clients. (not in this script)
 
 ## Prerequisites
 
@@ -44,20 +36,14 @@ This project aims to calculate dividends received by clients for the last quarte
 
 ## SQL Scripts
 
-### sp_generate_xml
-
-This script generates XML files by batch. It splits the `table_contract` table into batches of 10,000 rows and creates XML files for each batch.
-
-### Other SQL Scripts
-
-- `01-document.sp_quartly_statement.representative_create.sql`
-- `02-document.sp_quartly_statement.dividend_select.sql`
-- `03-document.sp_quartly_statement.pei_select.sql`
-- `04-document.sp_quartly_statement.pei_div_select.sql`
-- `05-document.sp_quartly_statement.contracts_select.sql`
-- `06-document.sp_quartly_statement.fulldata_select.sql`
-- `07-document.sp_quartly_statement_xml_select.sql`
-- `08-document.sp_quartly_statement_reporting_select.sql`
+- `01-document.sp_quartly_statement.representative_create.sql` : create a table for all people who will sign PDF files
+- `02-document.sp_quartly_statement.dividend_select.sql` : calculate dividends received
+- `03-document.sp_quartly_statement.pei_select.sql` :  : get PEI data
+- `04-document.sp_quartly_statement.pei_div_select.sql` : consolidate dividend and pei data for each client
+- `05-document.sp_quartly_statement.contracts_select.sql` : get contract information
+- `06-document.sp_quartly_statement.fulldata_select.sql` : consolidate all datas
+- `07-document.sp_quartly_statement_xml_select.sql` : export to XML files
+- `08-document.sp_quartly_statement_reporting_select.sql` : check the coherence between XML generated and the raw data from the dataHub to make sure that we don't have any discrepancies.
 
 ## Author
 
